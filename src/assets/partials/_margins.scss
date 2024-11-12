@@ -1,0 +1,203 @@
+// Utility classes for margins so they need not be redefined everywhere
+
+$margin-sizes: 0, 1, 3, 4, 5, 7, 8, 10, 12, 15, 20, 25, 30, 50;
+$pcent-sizes: 0, 5, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 95, 100;
+$margin-rems: (
+  "0": 0,
+  "0-25": 0.25,
+  "0-5": 0.5,
+  "0-75": 0.75,
+  "1": 1,
+  "1-25": 1.25,
+  "1-5": 1.5,
+  "1-75": 1.75,
+  "2": 2,
+  "2-25": 2.25,
+  "2-5": 2.5,
+  "2-75": 2.75,
+  "3": 3,
+  "4": 4,
+  "5": 5
+);
+
+// =========================================
+// Standard margin util class format using REMs
+// .m-rem-$direction-$size
+// =========================================
+
+// Some variations exist (.e.g .mx-rem-0-25)
+// Refer to values at $margin-rems
+@each $str, $val in $margin-rems {
+  .m-rem-#{$str} {
+    margin: #{$val}rem;
+  }
+
+  .mx-rem-#{$str} {
+    margin: 0 #{$val}rem;
+  }
+
+  .my-rem-#{$str} {
+    margin: #{$val}rem 0;
+  }
+
+  .m-rem-t-#{$str} {
+    margin-top: #{$val}rem;
+  }
+
+  .m-rem-r-#{$str} {
+    margin-right: #{$val}rem;
+  }
+
+  .m-rem-b-#{$str} {
+    margin-bottom: #{$val}rem;
+  }
+
+  .m-rem-l-#{$str} {
+    margin-left: #{$val}rem;
+  }
+}
+
+// =========================================
+// Standard margin util class format:
+// .m-$direction-$size
+// =========================================
+
+// Some variations exist (e.g .my-5)
+// Refer to values at $margin-sizes
+@each $msize in $margin-sizes {
+  .m-#{$msize} {
+    margin: #{$msize}px;
+  }
+
+  .mx-#{$msize} {
+    margin: 0 #{$msize}px;
+  }
+
+  .my-#{$msize} {
+    margin: #{$msize}px 0;
+  }
+
+  .m-t-#{$msize} {
+    margin-top: #{$msize}px;
+  }
+
+  // Unfortunate carryover of classes using non-standard format
+  .mt-#{$msize} {
+    margin-top: #{$msize}px;
+  }
+
+  .m-r-#{$msize} {
+    margin-right: #{$msize}px;
+  }
+
+  .m-b-#{$msize} {
+    margin-bottom: #{$msize}px;
+  }
+
+  // Unfortunate carryover of classes using non-standard format
+  .mb-#{$msize} {
+    margin-bottom: #{$msize}px;
+  }
+
+  .m-l-#{$msize} {
+    margin-left: #{$msize}px;
+  }
+
+  // important version
+  .m-#{$msize}i {
+    margin: 0px !important;
+  }
+
+  // important version
+  .m-t-#{$msize}i {
+    margin-top: "#{$msize}px !important";
+  }
+
+  // important version
+  .m-r-#{$msize}i {
+    margin-right: "#{$msize}px !important";
+  }
+
+  // important version
+  .m-b-#{$msize}i {
+    margin-bottom: "#{$msize}px !important";
+  }
+
+  // important version
+  .m-l-#{$msize}i {
+    margin-left: "#{$msize}px !important";
+  }
+}
+
+@each $msize in $pcent-sizes {
+  .m-pc-#{$msize} {
+    margin: $msize * 1%;
+  }
+
+  .m-pc-#{$msize}i {
+    margin: "#{$msize}% !important";
+  }
+
+  .m-pc-t-#{$msize} {
+    margin-top: $msize * 1%;
+  }
+
+  .m-pc-t-#{$msize}i {
+    margin-top: "#{$msize}% !important";
+  }
+
+  .m-pc-r-#{$msize} {
+    margin-right: $msize * 1%;
+  }
+
+  .m-pc-r-#{$msize}i {
+    margin-right: "#{$msize}% !important";
+  }
+
+  .m-pc-b-#{$msize} {
+    margin-bottom: $msize * 1%;
+  }
+
+  .m-pc-b-#{$msize}i {
+    margin-bottom: "#{$msize}% !important";
+  }
+
+  .m-pc-l-#{$msize} {
+    margin-left: $msize * 1%;
+  }
+
+  .m-pc-l-#{$msize}i {
+    margin-left: "#{$msize}% !important";
+  }
+}
+
+.m-0-auto {
+  margin: 0 auto;
+}
+
+.m-auto-0 {
+  margin: auto 0;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+// ========================
+// Mixins to handle other cases
+// ========================
+
+@mixin margin-builder($size, $direction: none, $unit: 'px') {
+  @if $unit != 'px' and $unit != 'rem' and $unit != 'em' and $unit != 'pt' {
+    @error "Property #{$unit} must be px, rem ,em, or pt.";
+  }
+  @if $direction != none {
+    @if $direction != top and $direction != right and $direction != bottom  and $direction != left {
+      @error "Property #{$direction} must be either left or right.";
+    } @else {
+      margin-#{$direction}: #{$size}#{$unit};
+    }
+  } @else {
+    margin: #{$size}#{$unit};
+  }
+}

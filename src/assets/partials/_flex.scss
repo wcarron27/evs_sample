@@ -1,0 +1,37 @@
+// Mixins for using flex box efficiently
+
+@mixin flex($inline: false) {
+  @if $inline == true {
+    display: inline-flex;
+  } @else {
+    display: flex;
+  }
+}
+
+@mixin flex-flow($direction: row, $wrap: wrap) {
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+}
+
+@mixin flex-justify($justify: flex-start) {
+  justify-content: $justify;
+}
+
+@mixin flex-align($content: flex-start, $items: flex-start) {
+  align-content: $content;
+  align-items: $items;
+}
+
+@mixin flexrow($inline: false, $wrap: wrap, $justify: flex-start, $align-content: flex-start, $align-items: flex-start) {
+  @include flex($inline);
+  @include flex-flow(row, $wrap);
+  @include flex-justify($justify);
+  @include flex-align($content: $align-content, $items: $align-items);
+}
+
+@mixin flexcol($inline: false, $wrap: wrap, $justify: flex-start, $align-content: flex-start, $align-items: flex-start) {
+  @include flex($inline);
+  @include flex-flow(column, $wrap);
+  @include flex-justify($justify);
+  @include flex-align($content: $align-content, $items: $align-items);
+}
